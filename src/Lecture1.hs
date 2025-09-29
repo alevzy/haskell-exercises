@@ -110,7 +110,7 @@ string.
 -}
 subString :: Int -> Int -> String -> String
 subString start end str
-    | start >= end = ""
+    | start > end = ""
     | start < 0 = subString 0 end str
     | otherwise = drop start (take (end + 1) str)
 
@@ -126,9 +126,9 @@ strSum :: String -> Int
 strSum str = go "" str 0
     where
         go :: String -> String -> Int -> Int
-        go substr "" acc = acc
-        go substr (c:str) acc
-            | c == ' ' = go "" str (acc + convert substr)
+        go substr "" acc = acc + convert substr
+        go substr (c:str0) acc
+            | c == ' ' = go "" str0 (acc + convert substr)
             | otherwise = go (substr ++ [c]) str acc
         convert :: String -> Int
         convert s
@@ -152,17 +152,17 @@ lowerAndGreater :: Int -> [Int] -> String
 lowerAndGreater n list = show n ++ greaterStr n list ++ lowerStr n list
     where
         greaterStr :: Int -> [Int] -> String
-        greaterStr n list = " is greater than " ++ (show (greater n list 0)) ++ " elements "
+        greaterStr x list0 = " is greater than " ++ show (greater x list0 0) ++ " elements "
         lowerStr :: Int -> [Int] -> String
-        lowerStr n list = " and lower than " ++ (show (lower n list 0)) ++ " elements"
+        lowerStr x list0 = " and lower than " ++ show (lower x list0 0) ++ " elements"
         greater :: Int -> [Int] -> Int -> Int
-        greater n [] acc = acc
-        greater n (a:list) acc
-            | n > a = greater n list (acc + 1)
-            | otherwise = greater n list acc
+        greater _ [] acc = acc
+        greater x (a:list0) acc
+            | x > a = greater x list0 (acc + 1)
+            | otherwise = greater x list0 acc
         lower :: Int -> [Int] -> Int -> Int
-        lower n [] acc = acc
-        lower n (a:list) acc
-            | n < a = lower n list (acc + 1)
-            | otherwise = lower n list acc
+        lower _ [] acc = acc
+        lower x (a:list0) acc
+            | x < a = lower x list0 (acc + 1)
+            | otherwise = lower x list0 acc
 
