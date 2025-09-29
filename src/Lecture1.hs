@@ -123,7 +123,7 @@ and finds a sum of the numbers inside this string.
 The string contains only spaces and/or numbers.
 -}
 strSum :: String -> Int
-strSum str = go "" str acc
+strSum str = go "" str 0
     where
         go :: String -> String -> Int -> Int
         go substr "" acc = acc
